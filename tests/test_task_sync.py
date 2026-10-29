@@ -1,5 +1,6 @@
 from odoo.tests.common import TransactionCase
 
+
 class TestDevIssueSync(TransactionCase):
 
     def setUp(self):
