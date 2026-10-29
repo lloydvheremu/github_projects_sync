@@ -1,34 +1,13 @@
-# -*- coding: utf-8 -*-
 {
-    'name': "github_projects",
-
-    'summary': "Short (1 phrase/line) summary of the module's purpose",
-
-    'description': """
-Long description of module's purpose
-    """,
-
-    'author': "My Company",
-    'website': "https://www.yourcompany.com",
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'Uncategorized',
-    'version': '0.1',
-
-    # any module necessary for this one to work correctly
-    'depends': ['base', 'project'],
-
-    # always loaded
-    'data': [
-        # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
-    ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
+    "name": "GitHub Projects Sync",
+    "summary": "Sync GitHub issues with Odoo project tasks",
+    "author": "Lloyd Vheremu",
+    "website": "https://github.com/lloydvheremu/github_projects_sync",
+    "license": "LGPL-3",
+    "category": "Services/Project",
+    "version": "19.0.1.0.0",
+    "depends": ["project"],
+    "external_dependencies": {
+        "python": ["requests"],
+    },
 }
-

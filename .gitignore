@@ -1,2 +1,33 @@
-*.pyc
-*/__pycache__/
+# Python
+*.py[cod]
+__pycache__/
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Tests and coverage
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+
+# Tooling caches
+.ruff_cache/
+.mypy_cache/
+
+# Editors and OS files
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+
+# Local configuration (never commit tokens)
+*.conf
+.env
