@@ -78,7 +78,7 @@ _The screenshots use sample issue data on a test database._
 2. Install the OCA
    [`helpdesk_mgmt`](https://github.com/OCA/helpdesk) module (branch
    `19.0`) and put this repository in your Odoo addons path. The folder
-   must be named `github_projects_sync`.
+   must be named `helpdesk_mgmt_github`.
 3. Update the apps list and install **Helpdesk GitHub Sync**.
 4. Create a GitHub
    [fine-grained personal access token](https://github.com/settings/personal-access-tokens)
@@ -128,7 +128,7 @@ Run the tests on a throwaway database. They mock GitHub, so they work
 offline:
 
 ```sh
-odoo-bin -d test_github_sync -i github_projects_sync --test-tags /github_projects_sync --stop-after-init
+odoo-bin -d test_github_sync -i helpdesk_mgmt_github --test-tags /helpdesk_mgmt_github --stop-after-init
 ```
 
 ## License

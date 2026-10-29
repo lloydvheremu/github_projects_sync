@@ -8,12 +8,12 @@ from odoo.tests import tagged
 from odoo.tests.common import TransactionCase, new_test_user
 from odoo.tools import mute_logger
 
-from odoo.addons.github_projects_sync.github_client import API_URL, GithubClient
+from odoo.addons.helpdesk_mgmt_github.github_client import API_URL, GithubClient
 
 from .github_mocks import fake_session, make_issue, make_pull_request, make_response
 
 ISSUES_URL = f"{API_URL}/repos/owner/repo/issues"
-LOGGER = "odoo.addons.github_projects_sync.models.helpdesk_ticket_team"
+LOGGER = "odoo.addons.helpdesk_mgmt_github.models.helpdesk_ticket_team"
 
 
 @tagged("post_install", "-at_install")
@@ -280,7 +280,7 @@ class TestGithubSync(TransactionCase):
 
     def test_client_uses_stored_token(self):
         self.env["ir.config_parameter"].sudo().set_param(
-            "github_projects_sync.token", "secret"
+            "helpdesk_mgmt_github.token", "secret"
         )
         client = self.team._github_get_client()
         self.assertEqual(client.session.headers["Authorization"], "Bearer secret")

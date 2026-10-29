@@ -117,7 +117,7 @@ class HelpdeskTicketTeam(models.Model):
         token = (
             self.env["ir.config_parameter"]
             .sudo()
-            .get_param("github_projects_sync.token")
+            .get_param("helpdesk_mgmt_github.token")
         )
         return GithubClient(token or None)
 

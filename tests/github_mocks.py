@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 import requests
 from requests.structures import CaseInsensitiveDict
 
-from odoo.addons.github_projects_sync.github_client import API_URL
+from odoo.addons.helpdesk_mgmt_github.github_client import API_URL
 
 
 def make_response(status=200, body=None, headers=None, url=API_URL):

@@ -24,7 +24,7 @@ class TestGithubDataModel(TransactionCase):
         )
 
     def test_repo_format_is_validated(self):
-        self.team.github_repo = "lloydvheremu/github_projects_sync"
+        self.team.github_repo = "lloydvheremu/helpdesk_mgmt_github"
         for bad_value in (
             "no-slash",
             "owner/",
@@ -70,7 +70,7 @@ class TestGithubDataModel(TransactionCase):
         self.assertEqual(
             self.env["ir.config_parameter"]
             .sudo()
-            .get_param("github_projects_sync.token"),
+            .get_param("helpdesk_mgmt_github.token"),
             "tok",
         )
 
