@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="helpdesk_ticket_team_view_form_github" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.team.form.github</field>
+        <field name="model">helpdesk.ticket.team</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.view_helpdesk_team_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_github_sync" type="object" string="Sync now"
+                            groups="helpdesk_mgmt.group_helpdesk_manager"
+                            invisible="not github_repo"/>
+                </header>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="github" string="GitHub"
+                      groups="helpdesk_mgmt.group_helpdesk_manager">
+                    <group>
+                        <group>
+                            <field name="github_repo" placeholder="owner/name"/>
+                            <field name="github_sync_enabled"/>
+                            <field name="github_last_sync"/>
+                        </group>
+                        <group>
+                            <field name="github_open_stage_id" options="{'no_create': True}"/>
+                            <field name="github_closed_stage_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

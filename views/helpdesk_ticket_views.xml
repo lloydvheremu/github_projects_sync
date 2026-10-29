@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="helpdesk_ticket_view_form_github" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.github</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='other_info']" position="after">
+                <page name="github" string="GitHub" invisible="not github_issue_id">
+                    <group>
+                        <group>
+                            <field name="github_issue_id" invisible="1"/>
+                            <field name="github_issue_number"/>
+                            <field name="github_issue_url" widget="url"/>
+                            <field name="github_issue_state"/>
+                            <field name="github_last_sync"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
