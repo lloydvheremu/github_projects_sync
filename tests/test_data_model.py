@@ -11,10 +11,20 @@ class TestGithubDataModel(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.project = cls.env["project.project"].create({"name": "Sync Project"})
+        cls.team = cls.env["helpdesk.ticket.team"].create({"name": "Sync Team"})
+
+    def _ticket(self, team=None, **values):
+        return self.env["helpdesk.ticket"].create(
+            {
+                "name": "Ticket",
+                "description": "<p>Text</p>",
+                "team_id": (team or self.team).id,
+                **values,
+            }
+        )
 
     def test_repo_format_is_validated(self):
-        self.project.github_repo = "lloydvheremu/github_projects_sync"
+        self.team.github_repo = "lloydvheremu/github_projects_sync"
         for bad_value in (
             "no-slash",
             "owner/",
@@ -24,52 +34,34 @@ class TestGithubDataModel(TransactionCase):
             "owner/name\n",
         ):
             with self.subTest(value=bad_value), self.assertRaises(ValidationError):
-                self.project.github_repo = bad_value
+                self.team.github_repo = bad_value
 
     def test_sync_needs_a_repo(self):
         with self.assertRaises(ValidationError):
-            self.project.github_sync_enabled = True
-        self.project.write({"github_repo": "odoo/odoo", "github_sync_enabled": True})
-        self.assertTrue(self.project.github_sync_enabled)
+            self.team.github_sync_enabled = True
+        self.team.write({"github_repo": "odoo/odoo", "github_sync_enabled": True})
+        self.assertTrue(self.team.github_sync_enabled)
 
     def test_large_issue_id_is_kept_exactly(self):
-        task = self.env["project.task"].create(
-            {
-                "name": "Big id",
-                "project_id": self.project.id,
-                "github_issue_id": "3456789012",
-            }
-        )
-        self.assertEqual(task.github_issue_id, "3456789012")
+        ticket = self._ticket(github_issue_id="3456789012")
+        self.assertEqual(ticket.github_issue_id, "3456789012")
 
     @mute_logger("odoo.sql_db")
-    def test_issue_linked_once_per_project(self):
-        Task = self.env["project.task"]
-        Task.create(
-            {"name": "First", "project_id": self.project.id, "github_issue_id": "42"}
-        )
+    def test_issue_linked_once_per_team(self):
+        self._ticket(github_issue_id="42")
         with self.assertRaises(IntegrityError):
-            Task.create(
-                {
-                    "name": "Duplicate",
-                    "project_id": self.project.id,
-                    "github_issue_id": "42",
-                }
-            )
+            self._ticket(github_issue_id="42")
             self.env.flush_all()
 
-    def test_same_issue_allowed_in_other_project(self):
-        other = self.env["project.project"].create({"name": "Other"})
-        Task = self.env["project.task"]
-        Task.create(
-            {"name": "A", "project_id": self.project.id, "github_issue_id": "7"}
-        )
-        Task.create({"name": "B", "project_id": other.id, "github_issue_id": "7"})
+    def test_same_issue_allowed_in_other_team(self):
+        other = self.env["helpdesk.ticket.team"].create({"name": "Other"})
+        self._ticket(github_issue_id="7")
+        self._ticket(team=other, github_issue_id="7")
         self.env.flush_all()
 
-    def test_tasks_without_issue_are_not_constrained(self):
-        Task = self.env["project.task"]
-        Task.create([{"name": "x", "project_id": self.project.id}] * 2)
+    def test_tickets_without_issue_are_not_constrained(self):
+        self._ticket()
+        self._ticket()
         self.env.flush_all()
 
     def test_token_is_stored_as_system_parameter(self):
@@ -82,8 +74,8 @@ class TestGithubDataModel(TransactionCase):
             "tok",
         )
 
-    def test_copied_project_does_not_keep_github_link(self):
-        self.project.write({"github_repo": "odoo/odoo", "github_sync_enabled": True})
-        copy = self.project.copy()
+    def test_copied_team_does_not_keep_github_link(self):
+        self.team.write({"github_repo": "odoo/odoo", "github_sync_enabled": True})
+        copy = self.team.copy()
         self.assertFalse(copy.github_repo)
         self.assertFalse(copy.github_sync_enabled)
