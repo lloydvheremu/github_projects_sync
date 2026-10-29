@@ -1,8 +1,8 @@
 from odoo import fields, models
 
 
-class ProjectTask(models.Model):
-    _inherit = "project.task"
+class HelpdeskTicket(models.Model):
+    _inherit = "helpdesk.ticket"
 
     # GitHub issue ids no longer fit in a 32-bit integer, so keep them as text.
     github_issue_id = fields.Char(string="GitHub Issue ID", readonly=True, copy=False)
@@ -21,17 +21,6 @@ class ProjectTask(models.Model):
     )
 
     _github_issue_unique = models.Constraint(
-        "UNIQUE(project_id, github_issue_id)",
-        "This GitHub issue is already linked to a task in this project.",
+        "UNIQUE(team_id, github_issue_id)",
+        "This GitHub issue is already linked to a ticket in this team.",
     )
-
-    def create_github_issue(self):
-        for task in self:
-            if "dev" in task.tag_ids.mapped("name"):
-                # Placeholder logic — replace with real GitHub call
-                return {
-                    "title": task.name,
-                    "body": f"Task ID: {task.id}",
-                    "labels": task.tag_ids.mapped("name"),
-                }
-        return None

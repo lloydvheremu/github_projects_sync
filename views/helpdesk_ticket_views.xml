@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="project_task_view_form_github" model="ir.ui.view">
-        <field name="name">project.task.form.github</field>
-        <field name="model">project.task</field>
-        <field name="inherit_id" ref="project.view_task_form2"/>
+    <record id="helpdesk_ticket_view_form_github" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.github</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//notebook/page[@name='extra_info']" position="before">
+            <xpath expr="//notebook/page[@name='other_info']" position="after">
                 <page name="github" string="GitHub" invisible="not github_issue_id">
                     <group>
                         <group>
