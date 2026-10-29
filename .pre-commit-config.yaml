@@ -12,6 +12,7 @@ repos:
     rev: v0.17.1
     hooks:
       - id: ruff-check
+      - id: ruff-format
   - repo: https://github.com/OCA/pylint-odoo
     rev: v10.0.12
     hooks:
