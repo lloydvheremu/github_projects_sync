@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="project_task_view_form_github" model="ir.ui.view">
+        <field name="name">project.task.form.github</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='extra_info']" position="before">
+                <page name="github" string="GitHub" invisible="not github_issue_id">
+                    <group>
+                        <group>
+                            <field name="github_issue_id" invisible="1"/>
+                            <field name="github_issue_number"/>
+                            <field name="github_issue_url" widget="url"/>
+                            <field name="github_issue_state"/>
+                            <field name="github_last_sync"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

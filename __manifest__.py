@@ -10,4 +10,9 @@
     "external_dependencies": {
         "python": ["requests"],
     },
+    "data": [
+        "views/project_project_views.xml",
+        "views/project_task_views.xml",
+        "views/res_config_settings_views.xml",
+    ],
 }

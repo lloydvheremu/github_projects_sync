@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="project_project_view_form_github" model="ir.ui.view">
+        <field name="name">project.project.form.github</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='settings']" position="after">
+                <page name="github" string="GitHub" groups="project.group_project_manager">
+                    <group>
+                        <group>
+                            <field name="github_repo" placeholder="owner/name"/>
+                            <field name="github_sync_enabled"/>
+                            <field name="github_last_sync"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
