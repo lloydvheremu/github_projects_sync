@@ -288,6 +288,8 @@ class TestGithubSync(TransactionCase):
     def test_cron_syncs_enabled_teams_and_isolates_failures(self):
         Team = self.registry["helpdesk.ticket.team"]
         Teams = self.env["helpdesk.ticket.team"]
+        # The cron syncs every enabled team, so ignore any team already in the database.
+        Teams.search([("id", "!=", self.team.id)]).write({"github_sync_enabled": False})
         broken = Teams.create(
             {
                 "name": "Broken",
