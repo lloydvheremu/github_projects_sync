@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: pre-commit/action@v3.0.1
+
+  test:
+    runs-on: ubuntu-latest
+    container: ghcr.io/oca/oca-ci/py3.10-odoo19.0:latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_DB: odoo
+          # A throwaway database for the tests, so no password is needed.
+          POSTGRES_HOST_AUTH_METHOD: trust
+    env:
+      # The repository root is the module, so check it out in a folder
+      # named after the module, as Odoo expects.
+      ADDONS_DIR: addons
+      OCA_ENABLE_CHECKLOG_ODOO: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: addons/helpdesk_mgmt_github
+          persist-credentials: false
+      - name: Trust the checkout, which belongs to another user in the container
+        run: git config --global --add safe.directory "*"
+      - name: Install the module's dependencies
+        run: oca_install_addons
+      - name: Initialize the test database
+        run: oca_init_test_database
+      - name: Run the tests
+        run: oca_run_tests
