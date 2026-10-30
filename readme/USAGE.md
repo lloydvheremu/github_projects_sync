@@ -16,12 +16,19 @@ To link a team to a repository:
     ![Sync now](../static/description/usage_sync_now.png)
 
 4.  The issues are now in *Helpdesk \> Tickets*, with their labels as
-    tags.
+    tags. This is what the same issues look like on GitHub, listed with
+    the `gh` command line tool:
+
+    ![Issues on GitHub](../static/description/usage_github_issue_list.png)
 
     ![Imported tickets](../static/description/usage_tickets.png)
 
 5.  Open a ticket and use its *GitHub* tab to see the issue number, a
-    link to the issue, its state and the time of the last sync.
+    link to the issue, its state and the time of the last sync. The
+    ticket name, description and tags come from the title, body and
+    labels of the issue (here issue 31):
+
+    ![Issue 31 on GitHub](../static/description/usage_github_issue_view.png)
 
     ![GitHub tab of the ticket](../static/description/usage_ticket_github_tab.png)
 
